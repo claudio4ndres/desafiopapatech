@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { obtenerAmiiboAction, guardarProductoAction } from "../redux/amiibo";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 import cargando from "../assets/switch_console_cartridge.gif";
 
@@ -9,7 +9,7 @@ import { ContainerHome } from "./styled";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate  = useNavigate()
+  const navigate  = useNavigate();
 
   const [items, setItemsCarrito] = useState([]);
   const [paginaSeleccionada, setPaginaSeleccionada] = useState(1);

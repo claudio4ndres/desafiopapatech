@@ -75,6 +75,13 @@ const ProductoContenedor = styled.div`
       cursor: pointer;
     }
   }
+  .row-imagen{
+    width: 20%;
+    .producto-imagen{
+      width: 80%;
+      margin-top: 2rem;
+    }
+  }
 `;
 
 export default ProductoContenedor;

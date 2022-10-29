@@ -13,7 +13,9 @@ const Producto = () => {
   const [productoAgregado, setProductoAgregado] = useState(true);
   //obtenemos el producto en redux selecionado
   const producto = useSelector((store) => store.items.producto);
+  //data del carro
   const carro = useSelector((store) => store.items.carro);
+  //numero random
   let precio = Math.floor(Math.random() * 23323);
 
     //Si no tenemos productos volvemos al home
@@ -49,11 +51,19 @@ const Producto = () => {
       setContador(contador+1);
      }
   }
+
   //Agregamos al carrito
   const handlderAgregarAlCarrito = () =>{
-    const valoresExtra = { "cantidad": contador, "valor" : precioState, "tail": producto[0].tail }
+    
+    let valoresExtra = { "cantidad": contador, "valor" : precioState, "tail": producto[0].tail }
     producto.push(valoresExtra);
     let carritoArray = carro.concat(producto);
+
+    const productoRepetido = carritoArray.filter((itemsTail) => itemsTail.tail === producto[0].tail);
+
+    console.log("productoRepetido",productoRepetido)
+
+    if(productoRepetido.length === 2){
       if(producto[1] === undefined){
         setProductoAgregado(false)
         dispatch(agregarProductoAction(carritoArray));
@@ -63,6 +73,7 @@ const Producto = () => {
         dispatch(agregarProductoAction(carritoArray));
         setProductoAgregado(false)
       }
+    }
   }
 
 
@@ -73,8 +84,8 @@ const Producto = () => {
   return (
     <ProductoContenedor>
       <div className="volver"><a onClick={()=> handlerVolver()}>volver</a></div>
-      <div className="row">
-        <img src={producto[0].image} alt={producto[0].amiiboSeries} />
+      <div className="row-imagen">
+        <img className="producto-imagen" src={producto[0].image} alt={producto[0].amiiboSeries} />
       </div>
       <div className="row info">
         <section className="producto-cabecera">

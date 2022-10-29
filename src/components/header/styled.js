@@ -142,6 +142,13 @@ const MenuCarroContenedor = styled.div`
     font-weight: 600;
     font-size: 1rem;
   }
+  .btn-borrar{
+    border: none;
+    background: none;
+    color: red;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 
 export { HeaderContenedor, MenuCarroContenedor };

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { actualizarProductoAction, abrirMenuAction } from "../../redux/amiibo";
 import agregarformatoPesos from "../../utils";
-import { actualizarProductoAction } from "../../redux/amiibo";
 import { MenuCarroContenedor } from "./styled";
 
-const MenuCarro = () => {
-  const itemsCarro = useSelector((store) => store.items.carro);
+const MenuCarro = (props) => {
+  const { items, estado } = props;
   const dispatch = useDispatch();
+  const navigate  = useNavigate();
+  const itemsCarro = items;
   const [menu, setMenu] = useState(false);
   const [contador, setContador] = useState(1);
   const [precioTotal, setPrecioTotal] = useState("");
@@ -33,45 +36,29 @@ const MenuCarro = () => {
     }
   };
 
-  //Actualizamos Carrito
+  //Actualizamos Carro
   const contadorProducto = (opcion, id) => {
     let filtro = itemsCarro.filter((itemsTail) => itemsTail.tail === id);
     let nuevoCarro = itemsCarro;
-    //let filtro = datosExtras.find(el => el.tail=id);
 
     let cantidad = filtro[1].cantidad;
     if (opcion === "menos") {
       if (filtro[1].cantidad === 1) {
         cantidad = 1;
-        //dispatch(actualizarProductoAction(filtro));
       } else {
-        //setContador(contador - 1);
         cantidad = cantidad - 1;
-        //dispatch(actualizarProductoAction(filtro));
       }
     } else {
-      //setContador(contador + 1);
       cantidad = cantidad + 1;
-      //dispatch(actualizarProductoAction(filtro));
     }
 
     nuevoCarro.map(function (dato) {
       if (dato.tail == id) {
         dato.cantidad = cantidad;
       }
-     return dato
+      return dato;
     });
 
-    /*
-    for (let x = 0; x < itemsCarro.length; x++) {
-      if (itemsCarro[x].tail === id) {
-        itemsCarro[x].cantidad = cantidad;
-        console.log("itemsCarro[x]", itemsCarro[x]);
-        nuevoCarro.push(itemsCarro[x]);
-      }
-    }
-    */
-    console.log("nuevoCarro", nuevoCarro);
     dispatch(actualizarProductoAction(nuevoCarro));
     carroDeCompras();
   };
@@ -81,9 +68,9 @@ const MenuCarro = () => {
     const filtroDatosExtras = datosExtras.filter(
       (itemsTail) => itemsTail.tail === tail
     );
-    console.log("filtroDatosExtras",filtroDatosExtras);
     return filtroDatosExtras[0].cantidad;
   };
+
   //obtenemos precio del producto
   const precio = (tail) => {
     const filtroDatosExtras = datosExtras.filter(
@@ -94,7 +81,9 @@ const MenuCarro = () => {
   };
 
   //Checkout
-  const handlerCheckout = () => {};
+  const handlerCheckout = () => {
+    navigate("/checkout");
+  };
 
   //Abrimos menu
   const handlerAbrirMenu = () => {
@@ -104,15 +93,32 @@ const MenuCarro = () => {
   //Cerramos Menu
   const handlerCerrarCArrito = () => {
     setMenu(false);
+    dispatch(abrirMenuAction(false));
+  };
+
+  //borrar producto del carro
+  const hanlderBorrar = (id) => {
+    const eliminarProductos = itemsCarro.filter(
+      (producto) => producto.tail !== id
+    );
+    dispatch(actualizarProductoAction(eliminarProductos));
+    carroDeCompras();
   };
 
   useEffect(() => {
     if (itemsCarro.length !== 0) {
       handlerAbrirMenu();
-      carroDeCompras();
     }
+    carroDeCompras();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsCarro]);
+
+  useEffect(() => {
+    if (estado) {
+      handlerAbrirMenu();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado]);
 
   return (
     <MenuCarroContenedor>
@@ -130,32 +136,53 @@ const MenuCarro = () => {
             </button>
           </div>
         </div>
-        <div className="menu-listado">
-          {productoState.map((item, index) => (
-            <article key={index} className="card-menu">
-              <div className="imagen-card-menu">
-                <img src={item.image} alt={item.amiiboSeries} />
-              </div>
-              <div className="text">
-                <h3>{item.amiiboSeries}</h3>
-                <p>{precio(item.tail)}</p>
-                <div className="contenedor-contador">
-                  <button onClick={() => contadorProducto("menos", item.tail)}>
-                    -
-                  </button>
-                  <div className="contador-producto">{cantidad(item.tail)}</div>
-                  <button onClick={() => contadorProducto("mas", item.tail)}>
-                    +
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        <p className="total">Total: {agregarformatoPesos(precioTotal)}</p>
-        <div className="checkout">
-          <button onClick={(e) => handlerCheckout()}>Checkout</button>
-        </div>
+
+        {itemsCarro.length === 0 ? (
+          <div>
+            <p>Tu bolsa está vacía</p>
+          </div>
+        ) : (
+          <>
+            <div className="menu-listado">
+              {productoState.map((item, index) => (
+                <article key={index} className="card-menu">
+                  <div className="imagen-card-menu">
+                    <img src={item.image} alt={item.amiiboSeries} />
+                  </div>
+                  <div className="text">
+                    <h3>{item.amiiboSeries}</h3>
+                    <p>{precio(item.tail)}</p>
+                    <div className="contenedor-contador">
+                      <button
+                        onClick={() => contadorProducto("menos", item.tail)}
+                      >
+                        -
+                      </button>
+                      <div className="contador-producto">
+                        {cantidad(item.tail)}
+                      </div>
+                      <button
+                        onClick={() => contadorProducto("mas", item.tail)}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      className="btn-borrar"
+                      onClick={(e) => hanlderBorrar(item.tail)}
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="total">Total: {agregarformatoPesos(precioTotal)}</p>
+            <div className="checkout">
+              <button onClick={(e) => handlerCheckout()}>Checkout</button>
+            </div>
+          </>
+        )}
       </div>
     </MenuCarroContenedor>
   );

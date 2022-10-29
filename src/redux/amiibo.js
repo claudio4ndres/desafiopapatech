@@ -4,7 +4,9 @@ import axios from "axios";
 const dataInicial = {
   amiibos: [],
   producto: [],
-  carro: []
+  carro: [],
+  abrirMenu: false,
+  checkout: {},
 };
 
 //tipos
@@ -13,6 +15,9 @@ const OBTENER_AMIIBO = "OBTENER_AMIIBO";
 const GUARDAR_PRODUCTO_SELECCIONADO = "GUARDAR_PRODUCTO_SELECCIONADO";
 const AGREGAR_PRODUCTO_CARRO = "AGREGAR_PRODUCTO_CARRO";
 const ACTUALIZAR_CARR0 = "ACTUALIZAR_CARR0";
+const ABRIR_MENU = "ABRIR_MENU";
+const CHECKOUT = "CHECKOUT";
+const LIMPIAR_CARRO = "LIMPIAR_CARRO";
 
 //reducer
 
@@ -22,10 +27,16 @@ export default function amiiboReducer(state = dataInicial, action) {
       return { ...state, amiibos: action.payload };
     case "GUARDAR_PRODUCTO_SELECCIONADO":
       return { ...state, producto: action.payload };
-      case "AGREGAR_PRODUCTO_CARRO":
-        return { ...state, carro: action.payload };
-        case "ACTUALIZAR_CARR0":
-          return { ...state, carro: action.payload };
+    case "AGREGAR_PRODUCTO_CARRO":
+      return { ...state, carro: action.payload };
+    case "ACTUALIZAR_CARR0":
+      return { ...state, carro: action.payload };
+    case "ABRIR_MENU":
+      return { ...state, abrirMenu: action.payload };
+    case "CHECKOUT":
+      return { ...state, checkout: action.payload };
+    case "LIMPIAR_CARRO":
+      return { ...state, carro: action.payload };
     default:
       return state;
   }
@@ -53,7 +64,7 @@ export const guardarProductoAction =
     });
   };
 
-  export const agregarProductoAction =
+export const agregarProductoAction =
   (producto) => async (dispach, getState) => {
     dispach({
       type: AGREGAR_PRODUCTO_CARRO,
@@ -61,11 +72,32 @@ export const guardarProductoAction =
     });
   };
 
-  export const actualizarProductoAction =
+export const actualizarProductoAction =
   (actualizar) => async (dispach, getState) => {
     dispach({
       type: ACTUALIZAR_CARR0,
       payload: actualizar,
     });
   };
+
+export const abrirMenuAction = (menu) => async (dispach, getState) => {
+  dispach({
+    type: ABRIR_MENU,
+    payload: menu,
+  });
+};
+
+export const checkoutAction = (checkout) => async (dispach, getState) => {
+  dispach({
+    type: CHECKOUT,
+    payload: checkout,
+  });
+};
+
+export const limpiarCarroAction = (limpiar) => async (dispach, getState) => {
+  dispach({
+    type: LIMPIAR_CARRO,
+    payload: limpiar,
+  });
+};
 
