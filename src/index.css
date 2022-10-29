@@ -8,9 +8,12 @@ body {
     padding: 0 30px 30px ;
     background-image: url("./assets/fondo.jpg");
     background-repeat:repeat;
-    width: 100%;
 }
-
+@media screen and (min-width: 320px) and (max-width: 680px) {
+  body{
+    width: 100%;
+  }
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
