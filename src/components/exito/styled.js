@@ -7,6 +7,11 @@ const ExitoContenedor = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
+    img{
+      @media screen and (min-width: 320px) and (max-width: 680px) {
+        width: 90%;
+      }
+    }
   }
   .loader-imagen{
     width: 10%;
@@ -19,6 +24,9 @@ const ExitoContenedor = styled.div`
     height: 30px;
     color: white;
     cursor: pointer;
+    @media screen and (min-width: 320px) and (max-width: 680px) {
+      width: 90%;
+    }
   }
 `;
 

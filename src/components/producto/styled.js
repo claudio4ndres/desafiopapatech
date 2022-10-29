@@ -4,8 +4,10 @@ const ProductoContenedor = styled.div`
   display: flex;
   gap: 4rem;
   justify-content: center;
-  .row {
+  @media screen and (min-width: 320px) and (max-width: 680px) {
+    flex-direction: column;
   }
+
   .info {
     .producto-cabecera {
         p{
@@ -70,12 +72,18 @@ const ProductoContenedor = styled.div`
     }
   }
   .volver{
-    a{
+    button{
       font-weight: 600;
       cursor: pointer;
+      border: none;
+      background: none;
     }
   }
   .row-imagen{
+    @media screen and (min-width: 320px) and (max-width: 680px) {
+      width: 50%;
+      margin: 0 auto;
+    }
     width: 20%;
     .producto-imagen{
       width: 80%;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { actualizarProductoAction, abrirMenuAction } from "../../redux/amiibo";
 import agregarformatoPesos from "../../utils";
@@ -11,7 +11,6 @@ const MenuCarro = (props) => {
   const navigate  = useNavigate();
   const itemsCarro = items;
   const [menu, setMenu] = useState(false);
-  const [contador, setContador] = useState(1);
   const [precioTotal, setPrecioTotal] = useState("");
   const [productoState, setProductoState] = useState([]);
   const [datosExtras, setDatosExtras] = useState([]);
@@ -53,7 +52,7 @@ const MenuCarro = (props) => {
     }
 
     nuevoCarro.map(function (dato) {
-      if (dato.tail == id) {
+      if (dato.tail === id) {
         dato.cantidad = cantidad;
       }
       return dato;

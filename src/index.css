@@ -8,6 +8,7 @@ body {
     padding: 0 30px 30px ;
     background-image: url("./assets/fondo.jpg");
     background-repeat:repeat;
+    width: 100%;
 }
 
 code {

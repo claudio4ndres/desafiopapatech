@@ -10,7 +10,8 @@ const Producto = () => {
   const navigate = useNavigate();
   const [contador, setContador] = useState(1);
   const [precioState, setPrecioState] = useState("");
-  const [productoAgregado, setProductoAgregado] = useState(true);
+  const [, setProductoAgregado] = useState(true);
+  const [volverAgregar, setVolverAgregar] = useState(true);
   //obtenemos el producto en redux selecionado
   const producto = useSelector((store) => store.items.producto);
   //data del carro
@@ -18,74 +19,93 @@ const Producto = () => {
   //numero random
   let precio = Math.floor(Math.random() * 23323);
 
-    //Si no tenemos productos volvemos al home
-    useEffect(() => {
-      if (producto.length === 0) {
-        navigate("/");
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [producto]);
-
-    const pre = () =>{
-      if(precio !== precioState){
-        setPrecioState(precio);
-      }
-     
+  //Si no tenemos productos volvemos al home
+  useEffect(() => {
+    if (producto.length === 0) {
+      navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [producto]);
 
-    useEffect(() => {
-      pre(precio)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  const pre = () => {
+    if (precio !== precioState) {
+      setPrecioState(precio);
+    }
+  };
+
+  useEffect(() => {
+    pre(precio);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   //Contador de productos
   const contadorProducto = (opcion) => {
-     if(opcion === "menos"){
-         if(contador === 1){
-            setContador(1);
-         }else{
-          setContador(contador-1);
-         }
-     }else{
-      setContador(contador+1);
-     }
-  }
+    if (opcion === "menos") {
+      if (contador === 1) {
+        setContador(1);
+      } else {
+        setContador(contador - 1);
+      }
+    } else {
+      setContador(contador + 1);
+    }
+  };
 
   //Agregamos al carrito
-  const handlderAgregarAlCarrito = () =>{
-    
-    let valoresExtra = { "cantidad": contador, "valor" : precioState, "tail": producto[0].tail }
-    producto.push(valoresExtra);
+  const handlderAgregarAlCarrito = () => {
+    //Flag para volver agregar al carrito
+    if (volverAgregar) {
+      let valoresExtra = {
+        cantidad: contador,
+        valor: precioState,
+        tail: producto[0].tail,
+      };
+      producto.push(valoresExtra);
+    }
+
+    //Array carro le concatenamos producto
     let carritoArray = carro.concat(producto);
 
-    const productoRepetido = carritoArray.filter((itemsTail) => itemsTail.tail === producto[0].tail);
-
-    console.log("productoRepetido",productoRepetido)
-
-    if(productoRepetido.length === 2){
-      if(producto[1] === undefined){
-        setProductoAgregado(false)
+    //consultamos si el producto esta repetido
+    const productoRepetido = carritoArray.filter(
+      (itemsTail) => itemsTail.tail === producto[0].tail
+    );
+  
+    if (productoRepetido.length === 2) {
+      if (producto[1] === undefined) {
+        setProductoAgregado(false);
         dispatch(agregarProductoAction(carritoArray));
-      }else{
+      } else {
         producto[1].cantidad = contador;
         producto[1].valor = precioState;
         dispatch(agregarProductoAction(carritoArray));
-        setProductoAgregado(false)
+        setProductoAgregado(false);
       }
     }
-  }
+    setVolverAgregar(false);
+  };
 
-
-  const handlerVolver = () =>{
+  const handlerVolver = () => {
     navigate("/");
+  };
+
+  //Volvemos al Home si no tenemos datos
+  if(producto[0] === undefined){
+    return handlerVolver();
   }
-  
+
   return (
     <ProductoContenedor>
-      <div className="volver"><a onClick={()=> handlerVolver()}>volver</a></div>
+      <div className="volver">
+        <button onClick={() => handlerVolver()}>volver</button>
+      </div>
       <div className="row-imagen">
-        <img className="producto-imagen" src={producto[0].image} alt={producto[0].amiiboSeries} />
+        <img
+          className="producto-imagen"
+          src={producto[0].image}
+          alt={producto[0].amiiboSeries}
+        />
       </div>
       <div className="row info">
         <section className="producto-cabecera">
@@ -112,14 +132,19 @@ const Producto = () => {
           </p>
           <p className="precio">Precio: {agregarformatoPesos(precioState)}</p>
           <div className="agregar-al-carrito">
-             <div className="row contador">
-                  <button onClick={(e) => contadorProducto("menos")}>-</button>
-                  <div className="contador-producto">{contador}</div>
-                  <button onClick={(e) => contadorProducto("mas")}>+</button>
-             </div>
-             <div className="row">
-              <button className="boton-carrito" onClick={() => handlderAgregarAlCarrito()}>Agregar al carro</button>
-             </div>
+            <div className="row contador">
+              <button onClick={(e) => contadorProducto("menos")}>-</button>
+              <div className="contador-producto">{contador}</div>
+              <button onClick={(e) => contadorProducto("mas")}>+</button>
+            </div>
+            <div className="row">
+              <button
+                className="boton-carrito"
+                onClick={() => handlderAgregarAlCarrito()}
+              >
+                Agregar al carro
+              </button>
+            </div>
           </div>
         </section>
       </div>

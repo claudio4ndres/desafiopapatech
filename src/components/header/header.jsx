@@ -48,12 +48,12 @@ const Header = (props) => {
         <div className="menu-top">
           <ul>
             <li>
-              <a href="#" onClick={()=>handlderMenu(true)}>
+              <button onClick={()=>handlderMenu(true)}>
                 <span className="carrito-contador">{productoState.length}</span>
                 <span className="carrito-monto">
                   <span className="monto">{agregarformatoPesos(precioTotal)}</span>
                 </span>
-              </a>
+              </button>
             </li>
           </ul>
         </div>

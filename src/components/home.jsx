@@ -16,6 +16,7 @@ const Home = () => {
   const [itemsPorPaginas] = useState(28);
   const itemsCarrito = useSelector((store) => store.items.amiibos);
 
+
   useEffect(() => {
     dispatch(obtenerAmiiboAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps

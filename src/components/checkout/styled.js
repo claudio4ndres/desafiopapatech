@@ -3,8 +3,17 @@ import styled from "styled-components";
 const CheckoutContenedor = styled.div`
   display: flex;
   justify-content: space-evenly;
+  @media screen and (min-width: 320px) and (max-width: 769px) {
+    flex-direction: column;
+  }
   .checkout-form {
     .container {
+      @media screen and (min-width: 320px) and (max-width: 769px) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+      }
       label {
         p {
           font-size: 1rem;

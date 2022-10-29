@@ -17,9 +17,12 @@ const HeaderContenedor = styled.div`
         gap: 20px;
         flex-direction: unset;
         li {
-          a {
-            text-decoration: none;
-            color: rgb(92, 198, 240);
+          button {
+            color: rgb(92,198,240);
+            border: none;
+            background: none;
+            padding: 0;
+            }
             .carrito-contador {
               font-weight: 700;
             }
@@ -97,17 +100,30 @@ const MenuCarroContenedor = styled.div`
       display: flex;
       text-align: center;
       align-items: center;
+      @media screen and (min-width: 320px) and (max-width: 680px) {
+        flex-direction: column;
+      }
       .imagen-card-menu {
         width: 40%;
         text-align: center;
+        @media screen and (min-width: 320px) and (max-width: 680px) {
+          width: 90%;
+        }
         img {
           width: 40%;
+        }
+      }
+      .text{
+        h3{
+          @media screen and (min-width: 320px) and (max-width: 680px) {
+            font-size: 0.9rem;
+          }
         }
       }
     }
     .contenedor-contador {
       display: flex;
-    justify-content: center;
+      justify-content: center;
     .contador-producto{
       width: 20px;
     }

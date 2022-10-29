@@ -9,10 +9,13 @@ import Checkout from "./components/checkout/checkout";
 import Exito from "./components/exito/exito";
 import RootContenedor from "./styled";
 
+
+
 function App() {
+
   const itemsCarro = useSelector((store) => store.items.carro);
   const menuEstado = useSelector((store) => store.items.abrirMenu);
-  console.log("itemsCarro app", itemsCarro);
+
   return (
     <RootContenedor>
       <BrowserRouter>

@@ -18,6 +18,8 @@ const Checkout = () => {
   const [casoBorde, setCasoBorde] = useState("");
   const carro = useSelector((store) => store.items.carro);
 
+
+
   //Carro de Compras
   const carroDeCompras = () => {
     let productos = [];
@@ -106,6 +108,15 @@ const Checkout = () => {
     carroDeCompras();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  //Volvemos al Home si no tenemos datos
+  useEffect(() => {
+    if(carro.length === 0){
+      handlerVolver();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carro]);
+ 
 
   return (
     <CheckoutContenedor>

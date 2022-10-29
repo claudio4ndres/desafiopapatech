@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = generateStore();
+
 root.render(
   <React.StrictMode>
       <Provider store={store}>
