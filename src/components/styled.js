@@ -65,6 +65,9 @@ const ContainerHome = styled.div`
       gap: 10px;
       padding: 0;
       justify-content: center;
+      @media screen and (min-width: 320px) and (max-width: 769px) {
+        flex-wrap: wrap;
+      }
       li {
         color: rgb(92, 198, 240);
         cursor: pointer;

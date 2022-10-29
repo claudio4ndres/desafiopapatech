@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { actualizarProductoAction, abrirMenuAction } from "../../redux/amiibo";
+import { actualizarProductoAction, abrirMenuAction, checkoutEstadoAction } from "../../redux/amiibo";
 import agregarformatoPesos from "../../utils";
 import { MenuCarroContenedor } from "./styled";
 
 const MenuCarro = (props) => {
-  const { items, estado } = props;
+  const { items, estado, checkoutEstados } = props;
+  console.log("checkoutEstado",checkoutEstados)
   const dispatch = useDispatch();
   const navigate  = useNavigate();
   const itemsCarro = items;
@@ -81,6 +82,7 @@ const MenuCarro = (props) => {
 
   //Checkout
   const handlerCheckout = () => {
+    dispatch(checkoutEstadoAction(true));
     navigate("/checkout");
   };
 
@@ -151,7 +153,8 @@ const MenuCarro = (props) => {
                   <div className="text">
                     <h3>{item.amiiboSeries}</h3>
                     <p>{precio(item.tail)}</p>
-                    <div className="contenedor-contador">
+                    
+                    <div className={checkoutEstados ? "contenedor-contador ocultar": "contenedor-contador"}>
                       <button
                         onClick={() => contadorProducto("menos", item.tail)}
                       >
@@ -167,7 +170,7 @@ const MenuCarro = (props) => {
                       </button>
                     </div>
                     <button
-                      className="btn-borrar"
+                      className={checkoutEstados? "btn-borrar ocultar": "btn-borrar"}
                       onClick={(e) => hanlderBorrar(item.tail)}
                     >
                       Borrar
@@ -177,9 +180,12 @@ const MenuCarro = (props) => {
               ))}
             </div>
             <p className="total">Total: {agregarformatoPesos(precioTotal)}</p>
-            <div className="checkout">
-              <button onClick={(e) => handlerCheckout()}>Checkout</button>
-            </div>
+            
+               <div className={checkoutEstados ? "checkout ocultar": "checkout"}>
+               <button onClick={(e) => handlerCheckout()}>Checkout</button>
+             </div>
+            
+           
           </>
         )}
       </div>

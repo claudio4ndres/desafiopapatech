@@ -15,11 +15,11 @@ function App() {
 
   const itemsCarro = useSelector((store) => store.items.carro);
   const menuEstado = useSelector((store) => store.items.abrirMenu);
-
+  const checkoutEstado = useSelector((store) => store.items.checkoutEstado);
   return (
     <RootContenedor>
       <BrowserRouter>
-        <MenuCarro items={itemsCarro} estado={menuEstado} />
+        <MenuCarro items={itemsCarro} estado={menuEstado} checkoutEstados={checkoutEstado} />
         <div className="margin-container">
           <div className="row">
             <Header items={itemsCarro} />

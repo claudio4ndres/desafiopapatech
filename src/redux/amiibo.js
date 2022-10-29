@@ -7,6 +7,7 @@ const dataInicial = {
   carro: [],
   abrirMenu: false,
   checkout: {},
+  checkoutEstado: false,
 };
 
 //tipos
@@ -17,6 +18,7 @@ const AGREGAR_PRODUCTO_CARRO = "AGREGAR_PRODUCTO_CARRO";
 const ACTUALIZAR_CARR0 = "ACTUALIZAR_CARR0";
 const ABRIR_MENU = "ABRIR_MENU";
 const CHECKOUT = "CHECKOUT";
+const CHECKOUT_ESTADO = "CHECKOUT_ESTADO";
 const LIMPIAR_CARRO = "LIMPIAR_CARRO";
 
 //reducer
@@ -37,6 +39,8 @@ export default function amiiboReducer(state = dataInicial, action) {
       return { ...state, checkout: action.payload };
     case "LIMPIAR_CARRO":
       return { ...state, carro: action.payload };
+    case "CHECKOUT_ESTADO":
+      return { ...state, checkoutEstado: action.payload };
     default:
       return state;
   }
@@ -101,3 +105,10 @@ export const limpiarCarroAction = (limpiar) => async (dispach, getState) => {
   });
 };
 
+export const checkoutEstadoAction =
+  (checkoutEstado) => async (dispach, getState) => {
+    dispach({
+      type: CHECKOUT_ESTADO,
+      payload: checkoutEstado,
+    });
+  };

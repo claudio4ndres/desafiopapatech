@@ -22,6 +22,7 @@ const HeaderContenedor = styled.div`
             border: none;
             background: none;
             padding: 0;
+            cursor: pointer;
             }
             .carrito-contador {
               font-weight: 700;
@@ -96,6 +97,7 @@ const MenuCarroContenedor = styled.div`
     }
   }
   .menu-listado {
+    height: 500px;
     .card-menu {
       display: flex;
       text-align: center;
@@ -164,6 +166,9 @@ const MenuCarroContenedor = styled.div`
     color: red;
     outline: none;
     cursor: pointer;
+  }
+  .ocultar{
+    display:none !important;
   }
 `;
 

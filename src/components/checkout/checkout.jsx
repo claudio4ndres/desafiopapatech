@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { checkoutAction, limpiarCarroAction } from "../../redux/amiibo";
+import { checkoutAction, limpiarCarroAction, checkoutEstadoAction } from "../../redux/amiibo";
 import agregarformatoPesos from "../../utils";
 import CheckoutContenedor from "./styled";
 
@@ -60,6 +60,8 @@ const Checkout = () => {
   //Volver atras
   const handlerVolver = () => {
     navigate("/");
+    dispatch(checkoutEstadoAction(false));
+
   };
 
   //Final flujo
